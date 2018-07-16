@@ -1,0 +1,27 @@
+The Problem:
+ 
+There is a data structure that holds object of type Item.
+ 
+Item object has the attributes name and description. When the object is created, name will be “JustCreated” and description will be “Item Just Created”.
+ 
+There is one thread that creates these item object and adds it to the data structure.
+ 
+There are three separate threads that manipulate the item object.
+ 
+Thread one has the method modify that first checks the data structure size, then grabs hold of each object (traversing from 0 to size-1) and changes the name to “Modify-Thread1” and description to “Modified by Thread 1”.
+ 
+Thread two has the method modify that checks the data structure size and then grabs items in a reverse fashion from (size-1 to 0) and changes the name to “Modify-Thread2” and the description “ Modified by Thread 2”.
+ 
+Thread three creates a random index (index between 0 and size of datastructure-1) and deletes the object.
+ 
+Things to Check:
+ 
+·         Overall Design
+
+·         Patterns Used
+
+·         Prevent Dead-lock
+
+·         Prevent Out-of-Bounds
+
+·         Prevent Null Pointers

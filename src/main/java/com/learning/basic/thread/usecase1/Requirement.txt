@@ -1,0 +1,18 @@
+Write a java program that fetches content from a URL with multiple threads
+Command:
+fetch_url.sh param1 param2 param3
+param1 – URL
+param2 – number of times to fetch content from the URL in one thread
+param3 – number of threads
+output – request#/thread#, HTTP response code, response time
+	Summary: total number of requests, total time spent, number of responses per second
+Example:
+>fetch_url.sh http://www.google.com 10 10
+request1/thread1, HTTP 200, 100 milliseconds
+request2/thread1, HTTP 200, 98 milliseconds
+request1/thread2, HTTP 200, 80 milliseconds
+…
+request 10/thread9, HTTP 200, 80 millisecond
+request 10/thread10, HTTP 200, 82 milliseconds
+Summary: total number of request=100, total time spent=10 seconds, number of responses per second=10
+You must provide the java source code, compiled classes, and the shell script or Windows batch script that executes the program in Linux, Mac or Windows.
