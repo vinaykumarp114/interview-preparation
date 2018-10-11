@@ -3,9 +3,13 @@
  */
 package com.learning.basic.thread.usecase1;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,23 +24,35 @@ public class TestMultiThreading {
 	 * @throws InterruptedException
 	 */
 	public static void main(String[] args) {
-		if (args != null && args.length == 3) {			
-			executeService(args);
-//			executeThreads(args);
+		try {
+			List<String> allReadLines = new ArrayList<String>();
+	
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			String s;
+			while ((s = in.readLine()) != null && s.length() != 0) {
+			    allReadLines.add(s);
+			}
+	
+			if (!allReadLines.isEmpty() && allReadLines.size() == 3) {			
+				executeService(allReadLines);
+	//			executeThreads(allReadLines);
+			}
+		} catch(Exception exp) {
+			exp.printStackTrace();
 		}
 	}
 
 	/**
 	 * @param val
 	 */
-	public static void executeService(String[] val) {
-		int nThreads = Integer.parseInt(val[1]);
-		int nTimes = Integer.parseInt(val[2]);
+	public static void executeService(List<String> val) {
+		int nThreads = Integer.parseInt(val.get(1));
+		int nTimes = Integer.parseInt(val.get(2));
 
 		ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 		try {
 			for (int i = 0; i < nThreads; i++) {
-				Runnable worker = new Thread(new Job(val[0], nTimes));
+				Runnable worker = new Thread(new Job(val.get(0), nTimes));
 				executor.execute(worker);
 			}
 		} finally {
@@ -63,14 +79,14 @@ public class TestMultiThreading {
 	/**
 	 * @param val
 	 */
-	public static void executeThreads(String[] val) {
-		int nThreads = Integer.parseInt(val[1]);
-		int nTimes = Integer.parseInt(val[2]);
+	public static void executeThreads(List<String> val) {
+		int nThreads = Integer.parseInt(val.get(1));
+		int nTimes = Integer.parseInt(val.get(2));
 		Thread[] threads = new Thread[nThreads];
 
 		try {
 			for (int i = 0; i < threads.length; i++) {
-				threads[i] = new Thread(new Job(val[0], nTimes));
+				threads[i] = new Thread(new Job(val.get(0), nTimes));
 				threads[i].setName("Thread" + i);
 				threads[i].start();
 			}
@@ -103,7 +119,7 @@ class Job implements Runnable {
 	}
 
 	public void run() {
-		for (int j = 1; j < count; j++) {
+		for (int j = 0; j < count; j++) {
 			long startTime = System.currentTimeMillis();
 			int statusCode = getResponseStatusCode();
 			long endTime = System.currentTimeMillis() - startTime;

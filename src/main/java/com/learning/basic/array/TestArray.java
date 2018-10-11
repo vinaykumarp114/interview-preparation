@@ -3,6 +3,13 @@
  */
 package com.learning.basic.array;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Random;
+
 /**
  * @author VINAY
  * 
@@ -13,13 +20,42 @@ public class TestArray {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		printSecondHighest();
+
+		int[] val = generateRandomNumber();
+
+		LocalDateTime start = LocalDateTime.now();
+		printSecondHighest(val);
+		LocalDateTime end = LocalDateTime.now();
+		long t1 = ChronoUnit.NANOS.between(start, end);
+		System.out.println("Time take ->  printSecondHighest:: " + t1);
+
+		start = LocalDateTime.now();
+		printSecondHighestPerf(val);
+		end = LocalDateTime.now();
+		long t2 = ChronoUnit.NANOS.between(start, end);
+		System.out.println("Time take ->  printSecondHighestPerf :: " + t2);
+		
 		findMissingNumber();
 		findMissingNumbers();
-		
-		String[] input = {"1","2","3", "4"};
-		String output = loopArray(input, input.length -1);
-		System.out.println("Array Recursive : "+output);
+
+		String[] input = { "1", "2", "3", "4" };
+		String output = loopArray(input, input.length - 1);
+		System.out.println("Array Recursive : " + output);
+	}
+
+	/**
+	 * 
+	 */
+	private static int[] generateRandomNumber() {
+		Random r = new Random();
+		int i = 0;
+		int[] val = new int[10000000];
+
+		while (i < 100) {
+			val[i] = r.nextInt(10000000);
+			i++;
+		}
+		return val;
 	}
 
 	/**
@@ -39,7 +75,7 @@ public class TestArray {
 		int sumNaturalNumbers = 10 * (10 + 1) / 2;
 
 		System.out.println("Sum of our series: " + sumOurSeries);
-		System.out.println("missing number = "+ (sumNaturalNumbers - sumOurSeries));
+		System.out.println("missing number = " + (sumNaturalNumbers - sumOurSeries));
 	}
 
 	public static void findMissingNumbers() {
@@ -57,30 +93,56 @@ public class TestArray {
 		}
 	}
 
-	private static void printSecondHighest() {
-		int[] val = new int[] { 101, 12, 56, 65, 10, 50, 100 };
-		
+	private static void printSecondHighest(int[] val) {
 		int first = 0;
 		int second = 0;
-		
-		for (Integer i : val) {
-			if (i > first) {
+
+		for (Integer j : val) {
+			if (j > first) {
 				second = first;
-				first = i;
-			} else if (i > second) {
-				second = i;
+				first = j;
+			} else if (j > second) {
+				second = j;
 			}
 		}
 
 		System.out.println("First : " + first + " , Second : " + second);
 	}
-	
-	private static String loopArray(String[] input, int size){
+
+	private static void printSecondHighestPerf(int[] val) {
+		int first = 0;
+		int second = 0;
+
+		int left = 0;
+		int right = val.length - 1;
+
+		while (left < right) {
+			int res = val[left] > val[right] ? val[left] : val[right];
+						
+			if(res > first) {
+				if(second == 0 && first == 0) {
+					second = val[left] < res ? val[left] : val[right];
+				} else {
+					second = first;
+				}
+				first = res;
+			} else if( res > second) {
+				second = res;
+			}
+			
+			left++;
+			right--;
+		}
+
+		System.out.println("First : " + first + " , Second : " + second);
+	}
+
+	private static String loopArray(String[] input, int size) {
 		String output = "";
-		if(size < 0){
+		if (size < 0) {
 			return "";
 		}
-		output  = input[size] + "," +loopArray(input, size-1);
+		output = input[size] + "," + loopArray(input, size - 1);
 		return output;
 	}
 }
