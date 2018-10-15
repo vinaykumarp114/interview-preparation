@@ -3,11 +3,8 @@
  */
 package com.learning.basic.array;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -51,7 +48,7 @@ public class TestArray {
 		int i = 0;
 		int[] val = new int[10000000];
 
-		while (i < 100) {
+		while (i < 10000000) {
 			val[i] = r.nextInt(10000000);
 			i++;
 		}
@@ -101,7 +98,7 @@ public class TestArray {
 			if (j > first) {
 				second = first;
 				first = j;
-			} else if (j > second) {
+			} else if (first > j && j > second) {
 				second = j;
 			}
 		}
@@ -116,17 +113,17 @@ public class TestArray {
 		int left = 0;
 		int right = val.length - 1;
 
-		while (left < right) {
+		while (left <= right) {
 			int res = val[left] > val[right] ? val[left] : val[right];
 						
 			if(res > first) {
 				if(second == 0 && first == 0) {
-					second = val[left] < res ? val[left] : val[right];
+					second = val[left] < res ? val[left] : val[right] < res? val[right] : second;
 				} else {
 					second = first;
 				}
 				first = res;
-			} else if( res > second) {
+			} else if( first < res && res > second) {
 				second = res;
 			}
 			
