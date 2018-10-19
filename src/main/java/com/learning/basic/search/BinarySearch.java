@@ -38,7 +38,7 @@ public class BinarySearch {
 			} else if (a[mid] > key) {
 				hi = mid - 1;
 			} else {
-				return lo;
+				return mid;
 			}
 		}
 		return -1;

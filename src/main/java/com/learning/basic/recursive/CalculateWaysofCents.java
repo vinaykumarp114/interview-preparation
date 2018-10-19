@@ -18,7 +18,7 @@ public class CalculateWaysofCents {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(makeChange(2, 25));
+		System.out.println(makeChange(10, 25));
 	}
 
 	static int makeChange(int n, int denom){
