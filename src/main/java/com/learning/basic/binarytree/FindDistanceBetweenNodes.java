@@ -129,6 +129,7 @@ public class FindDistanceBetweenNodes {
 		TreeNode<Integer> lca = findLeastCommonAnchester(root, n1, n2, 1);
 
 		// If both n1 and n2 were present in Binary Tree, return dist
+		
 		if (distance1 != -1 && distance2 != -1)
 			return dist;
 
