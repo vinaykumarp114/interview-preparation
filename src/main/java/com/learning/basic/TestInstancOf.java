@@ -33,8 +33,9 @@ public class TestInstancOf {
 	}
 }
 
-class Base {
+class Base {	
 }
 
 class Derived extends Base {
+	
 }
