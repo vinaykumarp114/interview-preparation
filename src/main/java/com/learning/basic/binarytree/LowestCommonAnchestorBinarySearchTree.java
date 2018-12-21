@@ -7,7 +7,7 @@ package com.learning.basic.binarytree;
  * @author VINAY
  * 
  */
-public class LowestCommonAncestorBinaryTree {
+public class LowestCommonAnchestorBinarySearchTree {
 
 	/**
 	 * @param args
