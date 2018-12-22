@@ -18,6 +18,11 @@ public class TestStringIndexof {
 				+ identifyFirstDuplicate("Vinay Kumar"));
 		System.out.println("Identify First Non Duplicate Occurance : "
 				+ identifyFirstNonDupilcate("Vinay Vijay"));
+		
+		System.out.println("Identify First Non Duplicate Occurance - 1 : "
+				+ getFirstNotRepeatedChar("Vinay Vijay"));
+		System.out.println("Identify First  Duplicate Occurance - 1 : "
+				+ getFirstRepeatedChar("Vinay Kumar"));
 	}
 
 	/**
@@ -117,5 +122,38 @@ public class TestStringIndexof {
 		}
 		
 		return "";
+	}
+	
+	
+	static Character getFirstNotRepeatedChar(String input) {
+
+	    byte[] flags = new byte[256]; //all is initialized by 0 
+
+	    for (int i = 0; i < input.length(); i++) { // O(n)
+	        flags[(int)input.charAt(i)]++ ;
+	    }
+
+	    for (int i = 0; i < input.length(); i++) { // O(n)
+	        if(flags[(int)input.charAt(i)] == 1)
+	            return input.charAt(i);
+	    }
+
+	    return null;
+	}
+	
+	static Character getFirstRepeatedChar(String input) {
+
+	    byte[] flags = new byte[256]; //all is initialized by 0 
+
+	    for (int i = 0; i < input.length(); i++) { // O(n)
+	        flags[(int)input.charAt(i)]++ ;
+	    }
+
+	    for (int i = 0; i < input.length(); i++) { // O(n)
+	        if(flags[(int)input.charAt(i)] > 1)
+	            return input.charAt(i);
+	    }
+
+	    return null;
 	}
 }
