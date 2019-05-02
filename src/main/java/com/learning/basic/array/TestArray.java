@@ -5,7 +5,9 @@ package com.learning.basic.array;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author VINAY
@@ -17,6 +19,12 @@ public class TestArray {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
+		// Find the two repeating elements in a given array
+		int[] a = new int[] { 1, 2, 4, 7, 2, 3 };
+		printRepeating(a);
+		a = new int[] { 3, 1 };
+		printRepeating(a);
 
 		int[] val = generateRandomNumber();
 
@@ -31,13 +39,33 @@ public class TestArray {
 		end = LocalDateTime.now();
 		long t2 = ChronoUnit.NANOS.between(start, end);
 		System.out.println("Time take ->  printSecondHighestPerf :: " + t2);
-		
+
 		findMissingNumber();
 		findMissingNumbers();
 
 		String[] input = { "1", "2", "3", "4" };
 		String output = loopArray(input, input.length - 1);
 		System.out.println("Array Recursive : " + output);
+	}
+
+	private static void printRepeating(int[] a) {
+		System.out.println("Print two repeating elements in a given array - Method1 ");
+		Set<Integer> hashSet = new HashSet<>();
+		for (int i = 0; i < a.length; i++) {
+			if (!hashSet.add(a[i])) {
+				System.out.println("Index ::" + i + " - val:: " + a[i]);
+			}
+		}
+		
+		System.out.println("Print two repeating elements in a given array - Method2 ");
+		int[] count = new int[10];
+		for (int i = 0; i < a.length; i++) {
+			if(count[a[i]] == 1) {
+				System.out.println("Index ::" + i + " - val:: " + a[i]);
+			} else {
+				count[a[i]]++;
+			}			
+		}
 	}
 
 	/**
@@ -115,18 +143,18 @@ public class TestArray {
 
 		while (left <= right) {
 			int res = val[left] > val[right] ? val[left] : val[right];
-						
-			if(res > first) {
-				if(second == 0 && first == 0) {
-					second = val[left] < res ? val[left] : val[right] < res? val[right] : second;
+
+			if (res > first) {
+				if (second == 0 && first == 0) {
+					second = val[left] < res ? val[left] : val[right] < res ? val[right] : second;
 				} else {
 					second = first;
 				}
 				first = res;
-			} else if( first < res && res > second) {
+			} else if (first < res && res > second) {
 				second = res;
 			}
-			
+
 			left++;
 			right--;
 		}
